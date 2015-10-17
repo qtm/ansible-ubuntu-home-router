@@ -1,0 +1,11 @@
+---
+- name: configure home router server
+  hosts: all
+  vars_files:
+    - files/networking.yml
+    - files/key.yml
+  tasks:
+  - include: networking.yml
+  - include: security.yml
+  - include: flexget.yml
+  - include: plex.yml

@@ -1,0 +1,19 @@
+---
+- name: Install dhcp server
+  apt: pkg=isc-dhcp-server state=installed update_cache=yes
+
+- name: Copy isc configuration
+  template:
+    src: templates/isc.j2
+    dest: "/etc/default/isc-dhcp-server"
+
+- name: Backup dhcpd.conf
+  shell: mv /etc/dhcp/dhcpd.conf /etc/dhcp/dhcpd.conf.bak
+
+- name: Copy dhcp configuration
+  template:
+    src: templates/dhcpd.conf.j2
+    dest: "/etc/dhcp/dhcpd.conf"
+
+- name: Restart dhcp server
+  service: name=isc-dhcp-server state=restarted
