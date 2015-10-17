@@ -1,0 +1,13 @@
+#!/bin/sh
+
+cd "$TR_TORRENT_DIR"
+if [ -d "$TR_TORRENT_NAME" ]
+then
+  if ls "$TR_TORRENT_NAME"/*.rar > /dev/null 2>&1
+  then
+    find "$TR_TORRENT_NAME" -iname "*.rar" | while read file
+    do
+      unrar x -inul "$file"
+    done
+  fi
+fi

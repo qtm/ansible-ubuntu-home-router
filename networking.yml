@@ -1,4 +1,9 @@
 ---
+- name: Copy network configuration
+  template:
+    src: templates/interfaces.j2
+    dest: /etc/network/interfaces
+
 - name: Install dhcp server
   apt: pkg=isc-dhcp-server state=installed update_cache=yes
 
@@ -17,3 +22,21 @@
 
 - name: Restart dhcp server
   service: name=isc-dhcp-server state=restarted
+
+- name: Backup sysctl.conf
+  shell: cp /etc/sysctl.conf /etc/sysctl.conf.bak
+
+- name: Copy forwarding configuration
+  template:
+    src: templates/sysctl.conf.j2
+    dest: /etc/sysctl.conf
+
+- name: Iptables Rules
+  shell: "iptables -t nat -A POSTROUTING -o {{ external_interface }} -j MASQUERADE"
+
+- shell: "iptables -A FORWARD -i {{ external_interface }} net -o {{ internal_interface }} -m state -–state RELATED,ESTABLISHED -j ACCEPT"
+
+- shell: "iptables -A FORWARD -i {{ internal_interface }} -o {{ external_interface }} -j ACCEPT"
+
+- name: Save Iptables Rules
+  shell: iptables-save > /etc/iptables.rules

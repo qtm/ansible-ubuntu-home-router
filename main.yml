@@ -10,3 +10,4 @@
   - include: transmission.yml
   - include: flexget.yml
   - include: plex.yml
+  - include: samba.yml

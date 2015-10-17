@@ -1,0 +1,29 @@
+---
+- name: Add transmission repository
+  apt_repository: repo='ppa:transmissionbt/ppa' 
+
+- name: Install transmission packages
+  apt: pkg={{ item }} state=installed
+  with_items:
+    - transmission-cli
+    - transmission-common
+    - transmission-daemon
+
+- name: Stop transmission daemon
+  service:
+    name: transmission-daemon
+    state: stopped
+
+- name: Copy post download script
+  template:
+    src: templates/posttorrent.j2
+    dest: /home/root/posttorrent.sh
+    mode: 0755
+
+- name: Backup configuration file
+  shell: cp /var/lib/transmission-daemon/info/settings.json /var/lib/transmission-daemon/info/settings.json.bak
+
+- name: Copy configuration file
+  template:
+    src: templates/transmission.j2
+    dest: /var/lib/transmission-daemon/info/settings.json
