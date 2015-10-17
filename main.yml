@@ -7,5 +7,6 @@
   tasks:
   - include: networking.yml
   - include: security.yml
+  - include: transmission.yml
   - include: flexget.yml
   - include: plex.yml

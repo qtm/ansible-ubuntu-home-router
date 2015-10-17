@@ -1,0 +1,64 @@
+templates:
+  global:
+    transmission:
+      host: 192.168.1.1
+      port: 9091
+      username: {{ transmission_username }}
+      password: {{ transmission_password }}
+
+  tv:
+    series:
+      settings:
+        favgroup:
+          set:
+            path: /mnt/hdd1/soap/{{ '{{' }}series_name{{ '}}' }}/Season {{ '{{' }}series_season{{ '}}' }}
+      favgroup:
+        - Arrow
+        - Almost Human
+        - Black Sails
+        - Blindspot
+        - Cosmos A Space Time Odyssey
+        - Game of Thrones
+        - Grandfathered
+        - Homeland
+        - Family Guy
+        - Fargo
+        - Fear the Walking Dead
+        - Elementary
+        - Lilyhammer
+        - Limitless
+        - Lookinglass
+        - Lucifer
+        - Mr Robot
+        - Minority Report
+        - Misfits
+        - Person of Interest
+        - Rick and Morty
+        - Rosewood
+        - Sherlock
+        - South Park
+        - The Big Bang Theory
+        - The Grinder
+        - The Following
+        - The Simpsons
+        - The Muppets
+        - The Walking Dead
+        - True Detective
+        - Vikings
+        - Under the Dome
+        - Z Nation
+tasks:
+  revolutiontt task:
+    template:
+      - tv
+    headers:
+      Cookie: "uid={{ rev_uid }}; pass={{ rev_pass }}; PHPSESSID={{ rev_sessid }}"
+    rss: "https://revolutiontt.me/rss.php?feed=dl&cat=42&passkey={{ rev_passkey }}"
+        
+  bookmarkrevo task:
+    accept_all: yes
+    all_series:
+      path: /mnt/hdd1/soap/{{series_name}}/Season {{series_season}}
+    headers:
+      Cookie: "uid={{ rev_uid }}; pass={{ rev_pass }}; PHPSESSID={{ rev_sessid }}"
+    rss: "https://revolutiontt.me/rss.php?feed=dl&bookmarks=on&passkey={{ rev_passkey }}"

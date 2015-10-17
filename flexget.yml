@@ -1,0 +1,25 @@
+---
+- name: Install python pip
+  apt: pkg=python-pip state=installed
+
+- name: Install flexget dependencies
+  easy_install: name=six state=latest
+
+- name: Install flexget
+  pip: name=flexget
+
+- name: Create configuratio directory
+  file:
+    path: ~/.flexget
+    state: directory
+    mode: 0755
+
+- name: Copy configuration file
+  template:
+    src: templates/flexget.config.j2
+    dest: "~/.flexget/config.yml"
+
+- name: Create cron job
+  cron:
+    minute: */20
+    job: "/usr/local/bin/flexget execute --disable-tracking >> /root/.flexget/flexget.log"
