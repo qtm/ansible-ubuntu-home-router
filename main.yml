@@ -4,10 +4,14 @@
   vars_files:
     - files/networking.yml
     - files/key.yml
+    - files/torrents.yml
   tasks:
   - include: networking.yml
+    tags: network
   - include: security.yml
   - include: transmission.yml
+    tags: transmission
   - include: flexget.yml
+    tags: flexget
   - include: plex.yml
   - include: samba.yml

@@ -1,9 +1,9 @@
 templates:
   global:
     transmission:
-      host: 192.168.1.1
+      host: 192.168.0.1
       port: 9091
-      username: {{ transmission_username }}
+      username: {{ transmission_user }}
       password: {{ transmission_password }}
 
   tv:
@@ -58,7 +58,7 @@ tasks:
   bookmarkrevo task:
     accept_all: yes
     all_series:
-      path: /mnt/hdd1/soap/{{series_name}}/Season {{series_season}}
+      path: /mnt/hdd1/soap/{{ '{{' }}series_name{{ '}}' }}/Season {{ '{{' }}series_season{{ '}}' }}
     headers:
       Cookie: "uid={{ rev_uid }}; pass={{ rev_pass }}; PHPSESSID={{ rev_sessid }}"
     rss: "https://revolutiontt.me/rss.php?feed=dl&bookmarks=on&passkey={{ rev_passkey }}"

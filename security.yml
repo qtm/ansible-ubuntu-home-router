@@ -1,6 +1,6 @@
 ---
 - name: Install Openssh Server
-  apt: pkg=openssh-server state=installed update_cache=yes
+  apt: pkg=openssh-server state=installed update_cache=yes force=yes
 
 - name: Backup sshd_config
   shell: cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
@@ -13,7 +13,13 @@
 - name: Restart ssh service
   service: name=ssh state=restarted
 
+- name: Create .ssh directory
+  file:
+    path: /root/.ssh
+    state: directory
+    mode: 0700
+
 - name: Copy public ssh key
   copy:
     content: "{{ public_ssh_key }}"
-    dest: /home/root/.ssh/authorized_keys
+    dest: /root/.ssh/authorized_keys

@@ -3,7 +3,10 @@
   apt: pkg=python-pip state=installed
 
 - name: Install flexget dependencies
-  easy_install: name=six state=latest
+  shell: easy_install {{ item }}
+  with_items:
+    - "six==1.9.0"
+    - "transmissionrpc"
 
 - name: Install flexget
   pip: name=flexget
@@ -21,5 +24,6 @@
 
 - name: Create cron job
   cron:
-    minute: */20
+    name: "flexget"
+    minute: "*/20"
     job: "/usr/local/bin/flexget execute --disable-tracking >> /root/.flexget/flexget.log"

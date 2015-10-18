@@ -3,6 +3,8 @@ iface lo inet loopback
 
 auto {{ internal_interface }}
 iface {{ internal_interface }} inet static
-address 192.168.1.1
+address 192.168.0.1
 netmask 255.255.255.0
-gateway 192.168.1.1
+
+auto {{ external_interface }}
+iface {{ external_interface }} inet dhcp
