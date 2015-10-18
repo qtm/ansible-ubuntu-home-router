@@ -5,6 +5,7 @@
     - files/networking.yml
     - files/key.yml
     - files/torrents.yml
+    - files/watchlist.yml
   tasks:
   - name: Install packages
     apt: pkg={{ item }} state=installed
