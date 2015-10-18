@@ -8,3 +8,11 @@
 - name: Backup samba configuration
   shell: cp /etc/samba/smb.conf /etc/samba/smb.conf.bak
   when: samba_conf_backup.stat.exists == False
+
+- name: Copy samba configuration
+  template:
+    src: templates/samba.j2
+    dest: /etc/samba/smb.conf
+
+- name: Restart samba service
+  service: name=smbd state=restarted
