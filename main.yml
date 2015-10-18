@@ -6,6 +6,12 @@
     - files/key.yml
     - files/torrents.yml
   tasks:
+  - name: Install packages
+    apt: pkg={{ item }} state=installed
+    with_items:
+      - mc
+    tags: packages
+
   - include: networking.yml
     tags: network
   - include: security.yml
