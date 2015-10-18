@@ -1,3 +1,10 @@
 ---
 - name: Install Samba Server
   apt: pkg=samba state=installed
+
+- stat: path=/etc/samba/smb.conf.bak
+  register: samba_conf_backup
+
+- name: Backup samba configuration
+  shell: cp /etc/samba/smb.conf /etc/samba/smb.conf.bak
+  when: samba_conf_backup.stat.exists == False
