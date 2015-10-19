@@ -13,9 +13,9 @@ templates:
           set:
             path: /mnt/hdd1/soap/{{ '{{' }}series_name{{ '}}' }}/Season {{ '{{' }}series_season{{ '}}' }}
       favgroup:
-      {% for item in series %}
+{% for item in series %}
         - {{ item }}
-      {% endfor %}
+{% endfor %}
 tasks:
   revolutiontt task:
     template:
