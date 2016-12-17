@@ -1,0 +1,39 @@
+---
+- name: Install dependencies
+  apt: pkg={{ item }} state=installed
+  with_items:
+    - python
+    - python-twisted
+    - python-openssl
+    - python-setuptools
+    - intltool
+    - python-xdg
+    - python-chardet
+    - geoip-database
+    - python-libtorrent
+    - python-notify
+    - python-pygame
+    - python-glade2
+    - librsvg2-common
+    - xdg-utils
+    - python-mako
+
+- name: Download deluge source code
+  get_url:
+    url: http://git.deluge-torrent.org/deluge/snapshot/deluge-1.3.13.tar.gz
+    dest: /tmp
+
+- name: Untar deluge source
+  unarchive:
+    src: /tmp/deluge-1.3.13.tar.gz
+    dest: /tmp
+
+- name: Clean build
+  shell: "{{ item }}"
+  args:
+    chdir: /tmp/deluge-1.3.13
+  with_items:
+    - python setup.py clean -a
+    - python setup.py build
+    - python setup.py install_data
+    - python setup.py install --install-layout=deb

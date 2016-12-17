@@ -27,3 +27,5 @@
     tags: samba
   - include: squid.yml
     tags: squid
+  - include: deluge.yml
+    tags: deluge
