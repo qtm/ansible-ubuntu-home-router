@@ -17,8 +17,8 @@
 - name: Copy post download script
   template:
     src: templates/posttorrent.j2
-    dest: /root/posttorrent.sh
-    mode: 0755
+    dest: /var/lib/transmission-daemon/info/posttorrent.sh
+    mode: 0777
 
 - name: Backup configuration file
   shell: cp /var/lib/transmission-daemon/info/settings.json /var/lib/transmission-daemon/info/settings.json.bak

@@ -1,0 +1,23 @@
+---
+- name: Install squid
+  apt: pkg=squid3 state=installed
+
+- stat: path=/etc/squid3/squid.conf.bak
+  register: squid_conf_backup
+
+- name: Backup squid configuration
+  shell: cp /etc/squid3/squid.conf /etc/squid3/squid.conf.bak
+  when: squid_conf_backup.stat.exists == False
+
+- name: Copy squid configuration
+  template:
+    src: templates/squid.conf.j2
+    dest: /etc/squid3/squid.conf
+
+- name: Copy restricted sites
+  copy: 
+    content: "{{ bad_sites }}"
+    dest: /etc/squid3/bad-sites.acl
+
+- name: Restart squid service
+  service: name=squid3 state=restarted

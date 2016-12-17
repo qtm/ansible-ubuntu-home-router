@@ -4,6 +4,7 @@ echo 1 > /proc/sys/net/ipv4/ip_forward
 
 iptables -A INPUT -i lo -j ACCEPT
 iptables -A FORWARD -i {{ internal_interface }} -o {{ external_interface }} -j ACCEPT
+iptables -t nat -A PREROUTING -i {{ internal_interface }} ! -d 192.168.0.0/24 -p tcp -m multiport --dport 80,8080 -j DNAT --to 192.168.0.1:3128
 iptables -t nat -A POSTROUTING -o {{ external_interface }} -s 192.168.0.0/24 -j MASQUERADE
 iptables -A FORWARD -i {{ external_interface }} -m state --state ESTABLISHED,RELATED -j ACCEPT
 iptables -A FORWARD -i {{ external_interface }} -o {{ internal_interface }} -j REJECT

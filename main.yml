@@ -6,6 +6,7 @@
     - files/key.yml
     - files/torrents.yml
     - files/watchlist.yml
+    - files/sites.yml
   tasks:
   - name: Install packages
     apt: pkg={{ item }} state=installed
@@ -24,3 +25,5 @@
   - include: plex.yml
   - include: samba.yml
     tags: samba
+  - include: squid.yml
+    tags: squid

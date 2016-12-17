@@ -1,5 +1,7 @@
 #!/bin/sh
 
+TR_TORRENT_DIR="/mnt/hdd2/music/Suis La Lune - Distance ／ Closure (2015) [LAME MP3 - 320]/"
+
 cd "$TR_TORRENT_DIR"
 if [ -d "$TR_TORRENT_NAME" ]
 then
@@ -10,4 +12,9 @@ then
       unrar x -inul "$file"
     done
   fi
+
+	if [[ $TR_TORRENT_DIR == *"/mnt/hdd2/music"* ]]
+	then
+		sudo -u plex /usr/lib/plexmediaserver/Plex\ Media\ Scanner --scan --refresh --section 4 --directory "$TR_TORRENT_DIR"
+	fi
 fi
